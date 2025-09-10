@@ -27,17 +27,17 @@ const navigationItems = [
 export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
   return (
     <aside className={cn(
-      "fixed left-0 top-0 z-50 h-screen w-16 bg-gradient-sidebar border-r border-border/20",
-      "flex flex-col items-center py-6 space-y-6",
+      "fixed left-0 top-0 z-50 h-screen w-16 bg-sidebar-background",
+      "flex flex-col items-center py-4 space-y-4",
       className
     )}>
       {/* Logo */}
-      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-sidebar-accent/20">
-        <div className="w-6 h-6 bg-sidebar-accent rounded-sm" />
+      <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-sidebar-foreground">
+        <div className="w-5 h-5 bg-sidebar-background rounded-sm" />
       </div>
 
       {/* Navigation */}
-      <nav className="flex flex-col space-y-4 w-full px-2">
+      <nav className="flex flex-col space-y-2 w-full px-2">
         {navigationItems.map((item, index) => {
           const Icon = item.icon;
           return (
@@ -45,14 +45,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
               key={index}
               href={item.href}
               className={cn(
-                "flex items-center justify-center w-12 h-12 rounded-lg transition-all duration-200",
-                "hover:bg-sidebar-accent/20 group relative",
+                "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200",
+                "group relative",
                 item.active 
-                  ? "bg-sidebar-accent text-primary-foreground shadow-md" 
-                  : "text-sidebar-muted hover:text-sidebar-foreground"
+                  ? "bg-sidebar-foreground text-sidebar-background" 
+                  : "text-sidebar-muted hover:text-sidebar-foreground hover:bg-sidebar-foreground/10"
               )}
             >
-              <Icon size={20} />
+              <Icon size={18} />
               
               {/* Tooltip */}
               <span className={cn(

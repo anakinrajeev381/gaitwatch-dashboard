@@ -69,36 +69,14 @@ export const Dashboard: React.FC = () => {
         {/* Main Dashboard Content */}
         <div className="flex-1 flex">
           {/* Camera Grid */}
-          <main className="flex-1 p-6">
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-1">
-                    {isLiveMode ? 'Live Camera Feeds' : 'Camera Archive'}
-                  </h2>
-                  <p className="text-muted-foreground">
-                    {isLiveMode 
-                      ? 'Real-time monitoring with gait recognition' 
-                      : 'Historical camera recordings and events'
-                    }
-                  </p>
-                </div>
-                
-                <div className="text-sm text-muted-foreground">
-                  <span className="inline-flex items-center space-x-1">
-                    <div className="w-2 h-2 bg-status-online rounded-full" />
-                    <span>3 cameras online</span>
-                  </span>
-                  <span className="ml-4 inline-flex items-center space-x-1">
-                    <div className="w-2 h-2 bg-status-offline rounded-full" />
-                    <span>1 camera offline</span>
-                  </span>
-                </div>
-              </div>
+          <main className="flex-1 p-8">
+            {/* Location Section Header */}
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-foreground mb-2">Basement</h2>
             </div>
 
             {/* Camera Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               {cameraFeeds.map((camera) => (
                 <CameraCard
                   key={camera.id}
@@ -107,57 +85,17 @@ export const Dashboard: React.FC = () => {
               ))}
             </div>
 
-            {/* Additional Status Section */}
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-card rounded-lg p-6 border border-border">
-                <h3 className="font-semibold text-foreground mb-2">Today's Stats</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Recognized Employees</span>
-                    <span className="font-medium text-foreground">24</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Unknown Visitors</span>
-                    <span className="font-medium text-status-warning">3</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Total Events</span>
-                    <span className="font-medium text-foreground">47</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card rounded-lg p-6 border border-border">
-                <h3 className="font-semibold text-foreground mb-2">Recognition Accuracy</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Average Confidence</span>
-                    <span className="font-medium text-status-online">89.2%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">False Positives</span>
-                    <span className="font-medium text-status-warning">2.1%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">System Uptime</span>
-                    <span className="font-medium text-status-online">99.8%</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card rounded-lg p-6 border border-border">
-                <h3 className="font-semibold text-foreground mb-2">Quick Actions</h3>
-                <div className="space-y-2">
-                  <button className="w-full text-left px-3 py-2 text-sm bg-muted/30 hover:bg-muted/50 rounded-md transition-colors">
-                    Export Today's Report
-                  </button>
-                  <button className="w-full text-left px-3 py-2 text-sm bg-muted/30 hover:bg-muted/50 rounded-md transition-colors">
-                    Add New Employee
-                  </button>
-                  <button className="w-full text-left px-3 py-2 text-sm bg-muted/30 hover:bg-muted/50 rounded-md transition-colors">
-                    System Settings
-                  </button>
-                </div>
+            {/* Next Section */}
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-foreground mb-6">Backyard</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {cameraFeeds.map((camera) => (
+                  <CameraCard
+                    key={`backyard-${camera.id}`}
+                    {...camera}
+                    name={camera.name.replace('Camera', 'Camera')}
+                  />
+                ))}
               </div>
             </div>
           </main>

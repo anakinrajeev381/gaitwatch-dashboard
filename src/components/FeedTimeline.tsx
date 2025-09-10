@@ -64,21 +64,6 @@ export const FeedTimeline: React.FC<FeedTimelineProps> = ({
   events = defaultEvents, 
   className 
 }) => {
-  const getEventIcon = (type: string) => {
-    switch (type) {
-      case 'recognition':
-        return <User size={16} className="text-status-online" />;
-      case 'alert':
-        return <AlertCircle size={16} className="text-status-warning" />;
-      case 'entry':
-        return <User size={16} className="text-primary" />;
-      case 'exit':
-        return <User size={16} className="text-muted-foreground" />;
-      default:
-        return <Clock size={16} className="text-muted-foreground" />;
-    }
-  };
-
   const getEventLabel = (event: FeedEvent) => {
     switch (event.type) {
       case 'recognition':
@@ -96,90 +81,66 @@ export const FeedTimeline: React.FC<FeedTimelineProps> = ({
 
   return (
     <aside className={cn(
-      "w-80 bg-card border-l border-border flex flex-col",
+      "w-80 bg-background flex flex-col",
       className
     )}>
-      {/* Header */}
-      <div className="p-6 border-b border-border">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-lg font-semibold text-foreground">Feed</h2>
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-muted-foreground">Today</span>
+      {/* Header with date picker */}
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-4">
+            <span className="text-sm text-muted-foreground">Thu</span>
+            <span className="text-sm text-muted-foreground">Fri</span>
+            <span className="text-sm text-muted-foreground">Sat</span>
+            <span className="text-sm text-muted-foreground">Sun</span>
+            <span className="text-sm text-muted-foreground">Mon</span>
+            <span className="text-sm text-muted-foreground">Tue</span>
+            <span className="text-sm font-semibold text-foreground bg-foreground text-background rounded-md px-2 py-1">Wed</span>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Real-time gait recognition events
-        </p>
+        
+        <div className="flex flex-col space-y-1 mb-6">
+          <span className="text-2xl font-bold text-muted-foreground">09</span>
+          <span className="text-2xl font-bold text-muted-foreground">10</span>
+          <span className="text-2xl font-bold text-muted-foreground">11</span>
+          <span className="text-2xl font-bold text-muted-foreground">12</span>
+          <span className="text-2xl font-bold text-muted-foreground">13</span>
+          <span className="text-2xl font-bold text-muted-foreground">14</span>
+          <span className="text-2xl font-bold text-foreground bg-foreground text-background rounded-lg px-3 py-2">15</span>
+        </div>
       </div>
 
       {/* Timeline */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="p-6 space-y-4">
+      <div className="flex-1 overflow-y-auto px-6">
+        <div className="space-y-4">
           {events.map((event, index) => (
-            <div key={event.id} className={cn(
-              "flex items-start space-x-3 p-3 rounded-lg hover:bg-muted/30 transition-colors cursor-pointer"
-            )}>
-              {/* Thumbnail or Icon */}
+            <div key={event.id} className="flex items-start space-x-3">
+              {/* Thumbnail */}
               <div className="flex-shrink-0">
                 {event.thumbnail ? (
                   <img 
                     src={event.thumbnail} 
                     alt="Event thumbnail"
-                    className="w-10 h-10 rounded-md object-cover bg-muted"
+                    className="w-12 h-12 rounded-xl object-cover"
                   />
                 ) : (
-                  <div className="w-10 h-10 rounded-md bg-muted/50 flex items-center justify-center">
-                    {getEventIcon(event.type)}
+                  <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center">
+                    <User size={16} className="text-muted-foreground" />
                   </div>
                 )}
               </div>
 
               {/* Event Details */}
               <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between">
-                  <h3 className={cn(
-                    "font-medium text-sm text-foreground truncate",
-                    event.type === 'alert' && "text-status-warning"
-                  )}>
-                    {getEventLabel(event)}
-                  </h3>
-                  
-                  {event.confidence && (
-                    <span className={cn(
-                      "text-xs px-2 py-1 rounded-full",
-                      event.confidence >= 90 
-                        ? "bg-status-online/20 text-status-online"
-                        : event.confidence >= 70
-                        ? "bg-status-warning/20 text-status-warning"
-                        : "bg-status-offline/20 text-status-offline"
-                    )}>
-                      {event.confidence}%
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex items-center mt-1 text-xs text-muted-foreground space-x-3">
-                  <div className="flex items-center space-x-1">
-                    <MapPin size={12} />
-                    <span>{event.location}</span>
-                  </div>
-                  
-                  <div className="flex items-center space-x-1">
-                    <Clock size={12} />
-                    <span>{event.timestamp}</span>
-                  </div>
-                </div>
+                <h3 className="font-medium text-sm text-foreground">
+                  {event.location}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {event.timestamp}
+                </p>
               </div>
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Footer */}
-      <div className="p-6 border-t border-border">
-        <button className="w-full text-sm text-primary hover:text-primary-hover font-medium">
-          View All Events
-        </button>
       </div>
     </aside>
   );

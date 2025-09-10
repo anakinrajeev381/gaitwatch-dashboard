@@ -25,9 +25,8 @@ export const CameraCard: React.FC<CameraCardProps> = ({
 }) => {
   return (
     <div className={cn(
-      "relative bg-card rounded-lg overflow-hidden shadow-card",
-      "hover:shadow-float transition-all duration-300 group",
-      "border border-border/50",
+      "relative bg-card rounded-2xl overflow-hidden shadow-card",
+      "hover:shadow-float transition-all duration-200 group border border-border",
       className
     )}>
       {/* Video Feed */}
@@ -38,74 +37,34 @@ export const CameraCard: React.FC<CameraCardProps> = ({
           className="w-full h-full object-cover"
         />
         
-        {/* Live indicator */}
-        {isOnline && (
-          <div className="absolute top-3 left-3 flex items-center space-x-1 bg-black/70 px-2 py-1 rounded-md">
-            <Circle 
-              size={8} 
-              className={cn(
-                "fill-current",
-                isRecording ? "text-red-500 animate-pulse" : "text-status-online"
-              )} 
-            />
-            <span className="text-white text-xs font-medium">LIVE</span>
-          </div>
-        )}
-
-        {/* Controls overlay */}
-        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button className="p-1.5 bg-black/70 rounded-md hover:bg-black/80 transition-colors">
-            <MoreVertical size={16} className="text-white" />
-          </button>
+        {/* Status indicators overlay */}
+        <div className="absolute top-4 left-4 flex items-center space-x-2">
+          {isOnline && (
+            <div className="flex items-center space-x-1 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
+              <Wifi size={12} className="text-foreground" />
+              <span className="text-xs font-medium text-foreground">HD</span>
+            </div>
+          )}
         </div>
 
         {/* Confidence score */}
         {confidenceScore && (
-          <div className="absolute bottom-3 right-3 bg-black/70 px-2 py-1 rounded-md">
-            <span className="text-white text-xs font-medium">{confidenceScore}%</span>
+          <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
+            <span className="text-xs font-semibold text-foreground">{confidenceScore}</span>
           </div>
         )}
-      </div>
 
-      {/* Card Footer */}
-      <div className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="font-semibold text-card-foreground">{name}</h3>
-          <div className="flex items-center space-x-2">
-            {isOnline ? (
-              <Wifi size={16} className="text-status-online" />
-            ) : (
-              <WifiOff size={16} className="text-status-offline" />
-            )}
-          </div>
-        </div>
-        
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">{id}</span>
-          <span className="text-muted-foreground">{timestamp}</span>
+        {/* Controls overlay */}
+        <div className="absolute top-4 right-16 opacity-0 group-hover:opacity-100 transition-opacity">
+          <button className="p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors">
+            <MoreVertical size={14} className="text-foreground" />
+          </button>
         </div>
 
-        {/* Status indicators */}
-        <div className="flex items-center space-x-3 mt-3">
-          <div className="flex items-center space-x-1">
-            <div className={cn(
-              "w-2 h-2 rounded-full",
-              isOnline ? "bg-status-online" : "bg-status-offline"
-            )} />
-            <span className="text-xs text-muted-foreground">
-              {isOnline ? "Online" : "Offline"}
-            </span>
-          </div>
-          
-          <div className="flex items-center space-x-1">
-            <div className={cn(
-              "w-2 h-2 rounded-full",
-              isRecording ? "bg-red-500" : "bg-muted"
-            )} />
-            <span className="text-xs text-muted-foreground">
-              {isRecording ? "Recording" : "Standby"}
-            </span>
-          </div>
+        {/* Camera info overlay */}
+        <div className="absolute bottom-4 left-4 text-white">
+          <h3 className="text-sm font-semibold drop-shadow-lg">{name}</h3>
+          <p className="text-xs opacity-90 drop-shadow-lg">{timestamp}</p>
         </div>
       </div>
     </div>
